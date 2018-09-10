@@ -44,26 +44,34 @@ Registration:
 http://192.168.1.142:8800/registration
 
 -req:
+```
      {
 	
      "email":"jb@gmail.com",
       "password":"jb"
 
       }
--res:{
+ ```
+-res:
+```
+	{
       "res":"0",
        "msg":"successfully insert"
-        }
+    }
+```
 
 ###
 login:
 http://192.168.1.142:8800/login
 -req:
+```
     {
         "email":"123@gmail.com",
         "password":"123"
     }
+```
 -res:
+```
     {
     "res": "0",
     "msg": "Login User",
@@ -73,11 +81,13 @@ http://192.168.1.142:8800/login
     "res": "1",
     "msg": "Incorreact Email or password"
     }
+```
 ###
 Display addressbook:
 http://192.168.1.142:8800/display/:user_id
 
 -res:
+```
     {
     "res": "0",
     "msg": [
@@ -103,17 +113,21 @@ http://192.168.1.142:8800/display/:user_id
             }
         ]
     }
+```
 ###
 Add Address
 http://localhost:8800/addaddress/:user_id
 -req:
+```
     {
 	"name":"sai",
 	"email":"sai@gmail.com",
 	"contact_number":"7878985845",
 	"active":true
     }
+```
 -res:
+```
 {
     "res": "0",
     "msg": "Successfully insert",
@@ -128,10 +142,12 @@ http://localhost:8800/addaddress/:user_id
             "is_deleted": 0
         }
 }
+```
 ###
 Update Address
 http://192.168.1.142:8800/update/:user_id/addressid/:address_id
 -req:
+```
    {
 	
    "name":"JJB",
@@ -142,7 +158,9 @@ http://192.168.1.142:8800/update/:user_id/addressid/:address_id
 	   "is_active":true
 
      }
--res:	
+```
+-res:
+```	
      {
     "res": "0",
     "msg": "Successfully update",
@@ -159,15 +177,19 @@ http://192.168.1.142:8800/update/:user_id/addressid/:address_id
         }
     ]
     }
+```
 ###
 Delete Address
 http://localhost:8800/delete/:user_id/address_id
--res {
+-res
+ ```
+ {
     {
     "res": "0",
     "msg": "successfully delete"
      }
-
+}
+```
 
 
 ## Support

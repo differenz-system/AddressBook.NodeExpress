@@ -43,7 +43,7 @@ Go to package.json->Script :"start":"./server.js"
 Registration:
 http://192.168.1.142:8800/registration
 
--req:
+**Request:**
 ```
      {
 	
@@ -52,7 +52,7 @@ http://192.168.1.142:8800/registration
 
       }
  ```
--res:
+**Response:**
 ```
 	{
       "res":"0",
@@ -63,14 +63,15 @@ http://192.168.1.142:8800/registration
 ###
 login:
 http://192.168.1.142:8800/login
--req:
+
+**Request:**
 ```
     {
         "email":"123@gmail.com",
         "password":"123"
     }
 ```
--res:
+**Response:**
 ```
     {
     "res": "0",
@@ -86,7 +87,7 @@ http://192.168.1.142:8800/login
 Display addressbook:
 http://192.168.1.142:8800/display/:user_id
 
--res:
+**Response:**
 ```
     {
     "res": "0",
@@ -117,7 +118,8 @@ http://192.168.1.142:8800/display/:user_id
 ###
 Add Address
 http://localhost:8800/addaddress/:user_id
--req:
+
+**Request:**
 ```
     {
 	"name":"sai",
@@ -126,7 +128,7 @@ http://localhost:8800/addaddress/:user_id
 	"active":true
     }
 ```
--res:
+**Response:**
 ```
 {
     "res": "0",
@@ -146,7 +148,8 @@ http://localhost:8800/addaddress/:user_id
 ###
 Update Address
 http://192.168.1.142:8800/update/:user_id/addressid/:address_id
--req:
+
+**Request:**
 ```
    {
 	
@@ -159,7 +162,7 @@ http://192.168.1.142:8800/update/:user_id/addressid/:address_id
 
      }
 ```
--res:
+**Response:**
 ```	
      {
     "res": "0",
@@ -181,7 +184,8 @@ http://192.168.1.142:8800/update/:user_id/addressid/:address_id
 ###
 Delete Address
 http://localhost:8800/delete/:user_id/address_id
--res
+
+**Response:**
  ```
  {
     {

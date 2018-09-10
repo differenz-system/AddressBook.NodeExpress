@@ -42,14 +42,15 @@ Go to package.json->Script :"start":"./server.js"
 ###
 Registration:
 http://192.168.1.142:8800/registration
-req:
+
+-req:
      {
 	
      "email":"jb@gmail.com",
       "password":"jb"
 
       }
-res:{
+-res:{
       "res":"0",
        "msg":"successfully insert"
         }
@@ -57,12 +58,12 @@ res:{
 ###
 login:
 http://192.168.1.142:8800/login
-req:
+-req:
     {
         "email":"123@gmail.com",
         "password":"123"
     }
-res:
+-res:
     {
     "res": "0",
     "msg": "Login User",
@@ -76,7 +77,7 @@ res:
 Display addressbook:
 http://192.168.1.142:8800/display/:user_id
 
-res:
+-res:
     {
     "res": "0",
     "msg": [
@@ -105,14 +106,14 @@ res:
 ###
 Add Address
 http://localhost:8800/addaddress/:user_id
-req:
+-req:
     {
 	"name":"sai",
 	"email":"sai@gmail.com",
 	"contact_number":"7878985845",
 	"active":true
     }
-res:
+-res:
 {
     "res": "0",
     "msg": "Successfully insert",
@@ -130,7 +131,7 @@ res:
 ###
 Update Address
 http://192.168.1.142:8800/update/:user_id/addressid/:address_id
-req:
+-req:
    {
 	
    "name":"JJB",
@@ -141,7 +142,7 @@ req:
 	   "is_active":true
 
      }
-res:	
+-res:	
      {
     "res": "0",
     "msg": "Successfully update",
@@ -161,7 +162,7 @@ res:
 ###
 Delete Address
 http://localhost:8800/delete/:user_id/address_id
-res {
+-res {
     {
     "res": "0",
     "msg": "successfully delete"

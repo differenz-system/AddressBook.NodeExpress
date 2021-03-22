@@ -40,7 +40,6 @@ router.post('/login',async(req,res)=>{
 
         // User details is match then else condition is true 
         else {
-            // var id = result.user_id;
             res.json({ 'res': '0', 'msg': 'Login User', 'data': result });
         }
         // Output 

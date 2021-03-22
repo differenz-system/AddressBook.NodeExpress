@@ -12,9 +12,6 @@ router.get("/getAddressBookByID/:user_id",async(req, res)=> {
                     user_id: req.params.user_id,
                     is_deleted: 0
                 },
-                // include:[{
-                //     model:db.user_model,
-                // }]
             })
             
             // Address details is match then if condition is true 

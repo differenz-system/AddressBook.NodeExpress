@@ -13,23 +13,6 @@ app.use((req, res, next)=>{
     next();
 });
 
-// const messageMap = {
-//     0: "success",
-//     1: "some_error"
-// }
-
-// app.use((req, res, next) => {
-//     const originJson = res.json
-//     res.json = (status, jsonData) => {
-//         const fixedResponse = {
-//             status,
-//             message: messageMap[status]
-//         }
-//         originJson.call(res, {...fixedResponse, ...jsonData})
-//     }
-//     next()
-// })
-
 import usersRouter=require('../api/user')
 app.use('/',usersRouter)
 

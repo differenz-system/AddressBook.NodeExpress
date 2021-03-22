@@ -41,158 +41,161 @@ Go to package.json->Script :"start":"./server.js"
 ## API
 ###
 Registration:
-http://192.168.1.142:8800/registration
+http://localhost:8800/registration
 
 **Request:**
 ```
      {
 	
-     "email":"jb@gmail.com",
-      "password":"jb"
+        "email":"user.admin@gmail.com",
+        "password":"12345"
 
-      }
+     }
  ```
 **Response:**
 ```
 	{
-      "res":"0",
-       "msg":"successfully insert"
+        "res": "1",
+        "msg": "This email is already exists "
+    }
+    {
+        "res": "0",
+        "msg": "Successfully registration",
+        "info": {
+            "user_id": 16,
+            "email": "admin.admin@gmail.com",
+            "password": "12345",
+            "external_id": "1",
+            "create_date": "2021-02-16"
+        }
     }
 ```
 
 ###
 login:
-http://192.168.1.142:8800/login
+http://localhost:8800/login
 
 **Request:**
 ```
     {
-        "email":"123@gmail.com",
-        "password":"123"
+         "email":"user.admin@gmail.com",
+         "password":"12345"
     }
 ```
 **Response:**
 ```
     {
-    "res": "0",
-    "msg": "Login User",
-    "user_id": 13
+        "res": "0",
+        "msg": "Login User",
+        "user_id": 16
     }
     {
-    "res": "1",
-    "msg": "Incorreact Email or password"
+        "res": "1",
+        "msg": "Enter proper email and password"
     }
 ```
 ###
 Display addressbook:
-http://192.168.1.142:8800/display/:user_id
+http://localhost:8800/getAddressBookByID/:user_id
 
 **Response:**
 ```
     {
-    "res": "0",
-    "msg": [
-            {
-                "address_id": 3,
-                "name": "jb",
-                "email": "jb@gmail.com",
-                "contact_number": "7788445566",
-                "is_active": 0,
-                "create_date": "2018-07-30T18:30:00.000Z",
-                "user_id": 6,
-                "is_deleted": 0,
-            },
-            {
-                "address_id": 5,
-                "name": "hello world",
-                "email": "jjb@gmail.com",
-                "contact_number": "9988557788",
-                "is_active": 1,
-                "create_date": "2018-07-30T18:30:00.000Z",
-                "user_id": 6,
-                "is_deleted": 0
+        "res": "0",
+        "data": [
+        {
+            "address_id": 4,
+            "name": "vruk patel",
+            "email": "user.admin@gmail.com",
+            "contact_number": "9157445662",
+            "is_active": "1",
+            "create_date": "2021-02-15T18:30:00.000Z",
+            "user_id": 1,
+            "is_deleted": 0,
+            "user": {
+                "user_id": 1,
+                "email": "user.user@gmail.com",
+                "password": "12345",
+                "external_id": 1,
+                "create_date": "2021-02-16"
             }
-        ]
+        }
+        ],
+        "msg": "successfully display"
     }
 ```
 ###
 Add Address
-http://localhost:8800/addaddress/:user_id
+http://localhost:8800/createAddressBook
 
 **Request:**
 ```
     {
-	"name":"sai",
-	"email":"sai@gmail.com",
-	"contact_number":"7878985845",
-	"active":true
-    }
+    "name":"abc",
+    "email":"abc.abc@gmail.com",
+    "contact_number":"8956231245",
+    "is_active":"true",
+    "user_id":"6"
+   }
 ```
 **Response:**
 ```
 {
     "res": "0",
     "msg": "Successfully insert",
-    "": {
-            "address_id": 5,
-            "name": "hello world",
-            "email": "jjb@gmail.com",
-            "contact_number": "9988557788",
-            "is_active": 1,
-            "create_date": "2018-07-30T18:30:00.000Z",
-            "user_id": 6,
-            "is_deleted": 0
-        }
+    "addressid": 5,
+    "data": {
+        "address_id": 5,
+        "name": "vruk",
+        "email": "user.user@gmail.com",
+        "contact_number": "9157445689",
+        "is_active": 1,
+        "create_date": "2021-02-15T18:30:00.000Z",
+        "is_deleted": 0
+    }
 }
 ```
 ###
 Update Address
-http://192.168.1.142:8800/update/:user_id/addressid/:address_id
+http://localhost:8800/updateAddressBook/:userid/:addressid
 
 **Request:**
 ```
-   {
-	
-   "name":"JJB",
-	
-   "email":"jjb@gmail.com",
-
-   "contact_number":"9977884455",
-	   "is_active":true
-
-     }
+    {
+    "name":"abc patel",
+    "email":"abc.patel@gmail.com",
+    "contact_number":"6548785231",
+    "is_active":"true"
+   }  
 ```
 **Response:**
 ```	
-     {
-    "res": "0",
-    "msg": "Successfully update",
-    "data": [
-        {
-            "address_id": 55,
-            "name": "JJB",
-            "email": "jjb@gmail.com",
-            "contact_number": "9977884455",
-            "is_active": 0,
-            "create_date": "2018-08-09",
-            "user_id": 71,
-            "is_deleted": 0
-        }
-    ]
+    {
+        "res": "0",
+        "msg": "Successfully update",
+        "data": [
+            {
+                "address_id": 4,
+                "name": "vruk patel",
+                "email": "user.admin@gmail.com",
+                "contact_number": "9157445662",
+                "is_active": "1",
+                "create_date": "2021-02-15T18:30:00.000Z",
+                "user_id": 1,
+                "is_deleted": 0
+            }
+        ]
     }
 ```
 ###
 Delete Address
-http://localhost:8800/delete/:user_id/address_id
-
+http://localhost:8800/removeAddressBook/:userid/:addressid
 **Response:**
  ```
- {
     {
-    "res": "0",
-    "msg": "successfully delete"
-     }
-}
+        "res": "0",
+        "msg": "successfully delete"
+    }
 ```
 
 

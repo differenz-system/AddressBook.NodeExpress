@@ -1,54 +1,135 @@
-var express = require('express');
-var url = require('url');
-var bodyParser = require('body-parser');
-var md5 = require('md5');
-var connecation = require('../configuration/sequelize');
-var rout = require('router');
-var user = require('../model/user_model');
-var server = require('../configuration/server');
-var datetime = new Date();
-var urlencodedParser = bodyParser.urlencoded({ extended: true });
-var app = express();
-app.use(rout);
-app.use(bodyParser.json());
-module.exports = function (app, db) {
-    app.post('/login', urlencodedParser, function (req, res) {
-        var ui = req.body.email;
-        var pas = req.body.password;
-        var pass = md5(req.body.password);
-        connecation.sync().then(function () {
-            user.findAll({
-                where: {
-                    email: req.body.email,
-                    password: pass
-                }
-            }).then(function (data) {
-                if (data == "") {
-                    res.json({ 'res': '1', 'msg': 'enter proper email and password' });
-                }
-                else {
-                    var id = data[0].user_id;
-                    res.json({ 'res': '0', 'msg': 'Login User', 'user_id': id });
-                }
-            });
-        });
-    });
-    app.post("/registration", urlencodedParser, function (req, res, next) {
-        var date = datetime.getFullYear() + "/" + datetime.getMonth() + "/" + datetime.getDate();
-        console.log(req.body.email);
-        var pass = md5(req.body.password);
-        connecation.sync().then(function () {
-            user.create({
-                email: req.body.email,
-                password: pass,
-                external_id: null,
-                create_date: date
-            }).then(function (data) {
-                var id = data.user_id;
-                res.json({ 'res': '0', 'msg': 'Successfully insert', 'user_id': id });
-            })["catch"](function (err) {
-                res.json({ 'res': '1', 'msg': 'use another email id' });
-            });
-        });
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var express = require('express');
+var router = express.Router();
+var { Op } = require('sequelize');
+const db = require("../configuration/sequelize");
+var datetime = new Date();
+router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email, password } = req.body;
+        if (!email) {
+            throw new Error("Please enter Email");
+        }
+        else if (!password) {
+            throw new Error("Please enter Password");
+        }
+        else {
+            const result = yield db.user_model.findOne({
+                where: {
+                    email,
+                    password
+                }
+            });
+            if (!result) {
+                res.json({ 'res': '1', 'msg': 'Enter proper email and password' });
+            }
+            else {
+                res.json({ 'res': '0', 'msg': 'Login User', 'data': result });
+            }
+        }
+    }
+    catch (error) {
+        res.json({ 'res': '1', 'error': error.message });
+    }
+}));
+router.post('/registration', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        var date = datetime.getFullYear() + "/" + datetime.getMonth() + "/" + datetime.getDate();
+        const { email, password } = req.body;
+        const verifyEmail = yield db.user_model.findOne({
+            where: {
+                email
+            }
+        });
+        if (verifyEmail) {
+            res.json({ 'res': '1', 'msg': 'This email is already exists ' });
+        }
+        else {
+            const result = yield db.user_model.create({
+                email,
+                password,
+                create_date: date
+            });
+            if (!result) {
+                res.json({ 'res': '1', 'msg': 'Error in registration' });
+            }
+            else {
+                var id = result.user_id;
+                res.json({ 'res': '0', 'msg': 'Successfully registration', 'data': result });
+            }
+        }
+    }
+    catch (error) {
+        res.json({ 'res': '1', 'error': error.message });
+    }
+}));
+router.delete('/user/delete', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { create_date } = req.body;
+        if (!req.body.create_date) {
+            res.json({ 'res': 1, 'msg': 'create_data is require' });
+        }
+        else {
+            const result = yield db.user_model.findOne({
+                where: {
+                    create_date: create_date
+                }
+            });
+            if (result) {
+                const result1 = yield db.user_model.destroy({
+                    where: {
+                        create_date: create_date
+                    }
+                });
+                if (result1) {
+                    res.json({ 'res': 0, 'msg': 'sucess delete', 'data': result1 });
+                }
+                else {
+                    res.json({ 'res': 1, 'msg': 'no data delete', 'data': result1 });
+                }
+            }
+            else {
+                res.json({ 'res': 1, 'msg': 'your date is not match' });
+            }
+        }
+    }
+    catch (error) {
+        res.json({ 'res': 1, 'msg': error.message });
+    }
+}));
+router.get('/search/:email/:password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield db.user_model.findAll({
+            where: {
+                [Op.or]: [{
+                        email: {
+                            [Op.substring]: req.params.email
+                        }
+                    }, {
+                        password: {
+                            [Op.substring]: req.params.password
+                        }
+                    }]
+            }
+        });
+        if (result.length > 0) {
+            res.json({ 'res': 0, 'msg': 'search record', 'data': result });
+        }
+        else {
+            res.json({ 'res': 1, 'msg': 'not record', 'data': result });
+        }
+    }
+    catch (error) {
+        res.json({ 'res': '1', 'msg': error.message });
+    }
+}));
+module.exports = router;

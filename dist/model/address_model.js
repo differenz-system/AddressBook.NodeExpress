@@ -1,18 +1,36 @@
-var connecation = require('../configuration/sequelize');
-var sequelize = require('sequelize');
-var address;
-address = {
-    address_id: {
-        type: sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true
-    },
-    name: sequelize.TEXT,
-    email: sequelize.TEXT,
-    contact_number: sequelize.TEXT,
-    is_active: sequelize.TEXT,
-    create_date: sequelize.DATE,
-    user_id: sequelize.INTEGER,
-    is_deleted: sequelize.INTEGER
+"use strict";
+module.exports = (connection, Sequelize) => {
+    var addressSchema = connection.define('address', {
+        address_id: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+        name: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        email: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        contact_number: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        is_active: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+        create_date: Sequelize.DATE,
+        user_id: Sequelize.INTEGER,
+        is_deleted: {
+            type: Sequelize.TEXT,
+            allowNull: false,
+        },
+    }, {
+        tableName: 'address',
+    });
+    return addressSchema;
 };
-module.exports = connecation.define('address', address);

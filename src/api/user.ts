@@ -95,7 +95,6 @@ router.post('/registration',async(req,res)=>{
             if(!result){
                 res.json({ 'res': '1', 'msg': 'Error in registration'});
             }
-    
             // Create method is success after show msg with userData
             else{
                 var id = result.user_id;
@@ -116,7 +115,6 @@ router.post('/registration',async(req,res)=>{
                         }
                     */
         }
-       
     } catch (error) {
         res.json({'res':'1','error':error.message})
     }

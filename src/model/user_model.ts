@@ -1,33 +1,36 @@
 // Vruk patel (18_03_21)
-export=(connection,Sequelize)=>{
-    var userSchema=connection.define('users',{
-        user_id:{
-            type:Sequelize.INTEGER,
+
+const userModel = (connection: any, Sequelize: any) => {
+    const userSchema = connection.define('users', {
+        user_id: {
+            type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull:false,
+            allowNull: false,
         },
-        email:{
+        email: {
             type: Sequelize.STRING,
             allowNull: false,
             validate: {
-                isEmail: true, 
-              }
+                isEmail: true,
+            },
         },
-        password:{
+        password: {
             type: Sequelize.STRING,
             allowNull: false,
         },
         external_id: {
             type: Sequelize.INTEGER,
             allowNull: true,
-            defaultValue:1
+            defaultValue: 1,
         },
         create_date: Sequelize.DATEONLY,
-    },{
-        tableName:'users'
-    })
+    }, {
+        tableName: 'users',
+        timestamps: false,
+    });
 
-    return userSchema
-}
+    return userSchema;
+};
 
+export default userModel;

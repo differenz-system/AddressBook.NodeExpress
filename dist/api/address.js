@@ -8,13 +8,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 var router = express.Router();
-const db = require("../configuration/sequelize");
+const sequelize_1 = require("../configuration/sequelize");
 var datetime = new Date();
 router.get("/getAddressBookByID/:user_id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield db.address_model.findAll({
+        const result = yield sequelize_1.default.address_model.findAll({
             where: {
                 user_id: req.params.user_id,
                 is_deleted: 0
@@ -36,7 +37,7 @@ router.post('/createAddressBook', (req, res) => __awaiter(void 0, void 0, void 0
         const { name, email, contact_number, is_active, user_id } = req.body;
         var date = datetime.getFullYear() + "/" + datetime.getMonth() + "/" + datetime.getDate();
         var a = is_active == true ? 1 : 0;
-        const result = yield db.address_model.create({
+        const result = yield sequelize_1.default.address_model.create({
             name,
             email,
             contact_number,
@@ -62,7 +63,7 @@ router.put("/updateAddressBook/:userid/:addressid", (req, res) => __awaiter(void
         var date = datetime.getFullYear() + "/" + datetime.getMonth() + "/" + datetime.getDate();
         const { name, email, contact_number, is_active } = req.body;
         var a = is_active == "true" ? 1 : 0;
-        yield db.address_model.update({
+        yield sequelize_1.default.address_model.update({
             name,
             email,
             contact_number,
@@ -79,7 +80,7 @@ router.put("/updateAddressBook/:userid/:addressid", (req, res) => __awaiter(void
                 res.json({ 'res': '1', 'msg': 'Update Error', 'data': data });
             }
             else {
-                db.address_model.findAll({
+                sequelize_1.default.address_model.findAll({
                     where: { address_id: req.params.addressid }
                 }).then((data) => {
                     res.json({ 'res': '0', 'msg': 'Successfully update', 'data': data });
@@ -93,10 +94,11 @@ router.put("/updateAddressBook/:userid/:addressid", (req, res) => __awaiter(void
 }));
 router.delete("/removeAddressBook/:userid/:addressid", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield db.address_model.update({
+        const result = yield sequelize_1.default.address_model.update({
             is_deleted: 1
         }, {
-            where: { address_id: req.params.addressid,
+            where: {
+                address_id: req.params.addressid,
                 user_id: req.params.userid
             }
         });
@@ -111,4 +113,4 @@ router.delete("/removeAddressBook/:userid/:addressid", (req, res) => __awaiter(v
         res.json({ 'res': '1', 'error': error.message });
     }
 }));
-module.exports = router;
+exports.default = router;

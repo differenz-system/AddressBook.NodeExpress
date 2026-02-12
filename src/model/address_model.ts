@@ -1,13 +1,13 @@
 // Vruk patel (18_03_21)
-export=(connection,Sequelize)=>{
-    var addressSchema=connection.define('address',{
-        address_id:{
-            type:Sequelize.INTEGER,
+const addressModel = (connection: any, Sequelize: any) => {
+    const addressSchema = connection.define('address', {
+        address_id: {
+            type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
-            allowNull:false,
+            allowNull: false,
         },
-        name:{
+        name: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
@@ -25,13 +25,16 @@ export=(connection,Sequelize)=>{
         },
         create_date: Sequelize.DATE,
         user_id: Sequelize.INTEGER,
-        is_deleted:{
+        is_deleted: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
-    },{
-        tableName:'address',
-    })
+    }, {
+        tableName: 'address',
+        timestamps: false,
+    });
 
-    return addressSchema
-}
+    return addressSchema;
+};
+
+export default addressModel;

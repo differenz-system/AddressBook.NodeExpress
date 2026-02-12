@@ -8,10 +8,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 var express = require('express');
 var router = express.Router();
 var { Op } = require('sequelize');
-const db = require("../configuration/sequelize");
+const sequelize_1 = require("../configuration/sequelize");
 var datetime = new Date();
 router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -23,7 +24,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
             throw new Error("Please enter Password");
         }
         else {
-            const result = yield db.user_model.findOne({
+            const result = yield sequelize_1.default.user_model.findOne({
                 where: {
                     email,
                     password
@@ -45,7 +46,7 @@ router.post('/registration', (req, res) => __awaiter(void 0, void 0, void 0, fun
     try {
         var date = datetime.getFullYear() + "/" + datetime.getMonth() + "/" + datetime.getDate();
         const { email, password } = req.body;
-        const verifyEmail = yield db.user_model.findOne({
+        const verifyEmail = yield sequelize_1.default.user_model.findOne({
             where: {
                 email
             }
@@ -54,7 +55,7 @@ router.post('/registration', (req, res) => __awaiter(void 0, void 0, void 0, fun
             res.json({ 'res': '1', 'msg': 'This email is already exists ' });
         }
         else {
-            const result = yield db.user_model.create({
+            const result = yield sequelize_1.default.user_model.create({
                 email,
                 password,
                 create_date: date
@@ -79,13 +80,13 @@ router.delete('/user/delete', (req, res) => __awaiter(void 0, void 0, void 0, fu
             res.json({ 'res': 1, 'msg': 'create_data is require' });
         }
         else {
-            const result = yield db.user_model.findOne({
+            const result = yield sequelize_1.default.user_model.findOne({
                 where: {
                     create_date: create_date
                 }
             });
             if (result) {
-                const result1 = yield db.user_model.destroy({
+                const result1 = yield sequelize_1.default.user_model.destroy({
                     where: {
                         create_date: create_date
                     }
@@ -108,7 +109,7 @@ router.delete('/user/delete', (req, res) => __awaiter(void 0, void 0, void 0, fu
 }));
 router.get('/search/:email/:password', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield db.user_model.findAll({
+        const result = yield sequelize_1.default.user_model.findAll({
             where: {
                 [Op.or]: [{
                         email: {
@@ -132,4 +133,4 @@ router.get('/search/:email/:password', (req, res) => __awaiter(void 0, void 0, v
         res.json({ 'res': '1', 'msg': error.message });
     }
 }));
-module.exports = router;
+exports.default = router;

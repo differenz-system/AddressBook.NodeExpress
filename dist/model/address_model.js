@@ -1,6 +1,7 @@
 "use strict";
-module.exports = (connection, Sequelize) => {
-    var addressSchema = connection.define('address', {
+Object.defineProperty(exports, "__esModule", { value: true });
+const addressModel = (connection, Sequelize) => {
+    const addressSchema = connection.define('address', {
         address_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -31,6 +32,8 @@ module.exports = (connection, Sequelize) => {
         },
     }, {
         tableName: 'address',
+        timestamps: false,
     });
     return addressSchema;
 };
+exports.default = addressModel;

@@ -1,6 +1,7 @@
 "use strict";
-module.exports = (connection, Sequelize) => {
-    var userSchema = connection.define('users', {
+Object.defineProperty(exports, "__esModule", { value: true });
+const userModel = (connection, Sequelize) => {
+    const userSchema = connection.define('users', {
         user_id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
@@ -12,7 +13,7 @@ module.exports = (connection, Sequelize) => {
             allowNull: false,
             validate: {
                 isEmail: true,
-            }
+            },
         },
         password: {
             type: Sequelize.STRING,
@@ -21,11 +22,13 @@ module.exports = (connection, Sequelize) => {
         external_id: {
             type: Sequelize.INTEGER,
             allowNull: true,
-            defaultValue: 1
+            defaultValue: 1,
         },
         create_date: Sequelize.DATEONLY,
     }, {
-        tableName: 'users'
+        tableName: 'users',
+        timestamps: false,
     });
     return userSchema;
 };
+exports.default = userModel;

@@ -11,10 +11,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     next();
 });
-const usersRouter = require("../api/user");
-app.use('/', usersRouter);
-const addressRouter = require("../api/address");
-app.use('/', addressRouter);
+const user_1 = require("../api/user");
+app.use('/', user_1.default);
+const address_1 = require("../api/address");
+app.use('/', address_1.default);
 app.listen(8800, () => {
     console.log("Your app is running on 8800");
 });
